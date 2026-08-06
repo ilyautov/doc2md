@@ -1,0 +1,15 @@
+# Не входит в пакет скилла: дев-окружение и материалы репозитория
+.DS_Store
+node_modules/
+assets/
+.github/
+.claude/
+.claude-plugin/
+.cursor-plugin/
+gemini-extension.json
+scripts/
+CHANGELOG.md
+CONTRIBUTING.md
+SECURITY.md
+SOURCES.md
+README.en.md

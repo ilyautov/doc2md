@@ -1,0 +1,12 @@
+{
+  "name": "doc2md",
+  "displayName": "doc2md",
+  "version": "1.2.0",
+  "description": "Batch-converts Word, PowerPoint, Excel, PDF, EPUB, RTF and CSV to clean Markdown before the agent reads them. One file, a list, or a whole folder. Auto-activates on document-conversion requests.",
+  "author": {
+    "name": "Ilya Utov",
+    "email": "ilyautov@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["markdown", "converter", "document", "docx", "pdf", "xlsx", "batch", "anydoc", "документы", "конвертер"]
+}

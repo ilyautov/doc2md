@@ -1,0 +1,15 @@
+# Security-гейт AI Plugin Scanner. Локальный прогон:
+# pip install plugin-scanner && plugin-scanner lint .
+name: plugin-scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashgraph-online/ai-plugin-scanner-action@v1

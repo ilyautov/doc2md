@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Telegram-канал автора (Under the Hood)
+    url: https://t.me/gorilla_under_hood
+    about: Новости проекта, разборы про AI и инструменты
+  - name: Движок конвертации — firecrawl/anydoc
+    url: https://github.com/firecrawl/anydoc
+    about: Баги самой конвертации форматов (качество Markdown, поддержка формата, OCR) — сюда, в апстрим

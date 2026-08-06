@@ -1,0 +1,25 @@
+{
+  "name": "doc2md",
+  "displayName": "doc2md",
+  "description": "Batch-converts Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV and PDF to clean Markdown before the agent reads them — one file, a list, or a whole folder. Wrapper over firecrawl/anydoc with an honest OK/SKIP/ERROR summary and OCR routing for scans. | Пакетно конвертирует Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV и PDF в чистый Markdown до чтения агентом — один файл, список или целая папка. Обёртка над firecrawl/anydoc со сводкой OK/ПРОПУСК/ОШИБКА и маршрутизацией сканов на OCR.",
+  "version": "1.2.0",
+  "author": {
+    "name": "Ilya Utov",
+    "email": "ilyautov@gmail.com"
+  },
+  "homepage": "https://github.com/ilyautov/doc2md",
+  "repository": "https://github.com/ilyautov/doc2md",
+  "license": "MIT",
+  "keywords": [
+    "markdown",
+    "converter",
+    "document",
+    "docx",
+    "pdf",
+    "xlsx",
+    "batch",
+    "anydoc",
+    "документы",
+    "конвертер"
+  ]
+}

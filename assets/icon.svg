@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- документ-намёк за бейджем -->
+  <g opacity="0.22" fill="#FFFFFF">
+    <rect x="150" y="96" width="150" height="120" rx="14" transform="rotate(-9 225 156)"/>
+  </g>
+  <!-- markdown-бейдж -->
+  <rect x="96" y="156" width="320" height="200" rx="26" fill="#FFFFFF"/>
+  <g fill="none" stroke="#2563EB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="132,320 132,192 202,262 272,192 272,320"/>
+    <line x1="336" y1="192" x2="336" y2="298"/>
+    <polyline points="306,266 336,300 366,266"/>
+  </g>
+</svg>

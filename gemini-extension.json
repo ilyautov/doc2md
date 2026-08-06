@@ -1,0 +1,5 @@
+{
+  "name": "doc2md",
+  "version": "1.2.0",
+  "description": "Пакетно конвертирует Word, PowerPoint, Excel, PDF, EPUB, RTF и CSV в чистый Markdown до чтения агентом: один файл, список или папка, сводка OK/ПРОПУСК/ОШИБКА. Batch-converts documents to clean Markdown before the agent reads them."
+}

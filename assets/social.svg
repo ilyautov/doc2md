@@ -1,0 +1,31 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#1E3A8A"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1280" height="640" fill="url(#bg)"/>
+
+  <!-- логотип-марка слева -->
+  <g transform="translate(-6,64)">
+    <g opacity="0.20" fill="#FFFFFF">
+      <rect x="150" y="96" width="150" height="120" rx="14" transform="rotate(-9 225 156)"/>
+    </g>
+    <rect x="96" y="156" width="320" height="200" rx="26" fill="#FFFFFF"/>
+    <g fill="none" stroke="#2563EB" stroke-width="28" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="132,320 132,192 202,262 272,192 272,320"/>
+      <line x1="336" y1="192" x2="336" y2="298"/>
+      <polyline points="306,266 336,300 366,266"/>
+    </g>
+  </g>
+
+  <!-- текст справа -->
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" fill="#FFFFFF">
+    <text x="470" y="252" font-size="112" font-weight="700" letter-spacing="-2">doc2md</text>
+    <text x="474" y="342" font-size="40" font-weight="600" fill="#DBEAFE">Word · Excel · PowerPoint · PDF · EPUB</text>
+    <text x="474" y="402" font-size="40" font-weight="600" fill="#DBEAFE">→ чистый Markdown для агента</text>
+    <text x="474" y="478" font-size="27" fill="#BFDBFE">Один файл, список или папка · сводка по batch</text>
+    <text x="474" y="518" font-size="27" fill="#BFDBFE">Обёртка над anydoc · MIT · Node.js · 4 платформы</text>
+  </g>
+</svg>

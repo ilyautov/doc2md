@@ -1,0 +1,35 @@
+{
+  "name": "ilyautov-plugins",
+  "description": "Plugins by Ilya Utov: doc2md converts document batches to clean Markdown before the agent reads them | Плагины Ильи Утова: doc2md конвертирует пачки документов в чистый Markdown до чтения агентом",
+  "owner": {
+    "name": "Ilya Utov",
+    "email": "ilyautov@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "doc2md",
+      "displayName": "doc2md",
+      "source": "./",
+      "description": "Batch-converts Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV and PDF to clean Markdown before the agent reads them — one file, a list, or a whole folder. Wrapper over firecrawl/anydoc with an honest OK/SKIP/ERROR summary and OCR routing for scans. | Пакетно конвертирует Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV и PDF в чистый Markdown до чтения агентом — один файл, список или целая папка.",
+      "version": "1.2.0",
+      "author": {
+        "name": "Ilya Utov",
+        "email": "ilyautov@gmail.com"
+      },
+      "homepage": "https://github.com/ilyautov/doc2md",
+      "repository": "https://github.com/ilyautov/doc2md",
+      "license": "MIT",
+      "keywords": [
+        "markdown",
+        "converter",
+        "document",
+        "docx",
+        "pdf",
+        "batch",
+        "документы",
+        "конвертер"
+      ],
+      "category": "productivity"
+    }
+  ]
+}

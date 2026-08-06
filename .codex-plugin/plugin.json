@@ -1,0 +1,29 @@
+{
+  "name": "doc2md",
+  "version": "1.2.0",
+  "description": "Batch-converts Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV and PDF to clean Markdown before the agent reads them. Wrapper over firecrawl/anydoc with a deterministic batch summary. | Пакетно конвертирует документы в чистый Markdown до чтения агентом: один файл, список или папка, честная сводка OK/ПРОПУСК/ОШИБКА.",
+  "author": {
+    "name": "Ilya Utov",
+    "email": "ilyautov@gmail.com",
+    "url": "https://github.com/ilyautov"
+  },
+  "homepage": "https://github.com/ilyautov/doc2md",
+  "repository": "https://github.com/ilyautov/doc2md",
+  "license": "MIT",
+  "keywords": ["markdown", "converter", "document", "docx", "pdf", "xlsx", "batch", "anydoc", "документы", "конвертер"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "doc2md",
+    "shortDescription": "Конвертирует документы в Markdown до чтения агентом",
+    "longDescription": "Прогоняет Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV и PDF через один конвертер и отдаёт агенту чистый GitHub-Flavored Markdown — вместо десятка формат-специфичных ридеров на лету. Принимает один файл, список путей или целую папку (рекурсивно), печатает построчный статус и итоговую сводку OK/ПРОПУСК/ОШИБКА, сканы без текстового слоя маршрутизирует на OCR. Обёртка над firecrawl/anydoc (Rust), нужен только Node.js.",
+    "developerName": "Ilya Utov",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write", "Bash"],
+    "websiteURL": "https://github.com/ilyautov/doc2md",
+    "privacyPolicyURL": "https://github.com/ilyautov/doc2md/blob/main/PRIVACY_POLICY.md",
+    "defaultPrompt": ["Сконвертируй эти документы в Markdown: ..."],
+    "brandColor": "#3B82F6",
+    "composerIcon": "./assets/icon-512.png",
+    "logo": "./assets/icon-512.png"
+  }
+}

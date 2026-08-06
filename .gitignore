@@ -1,0 +1,14 @@
+# macOS / локальный тулинг
+.DS_Store
+.claude/
+
+# Node
+node_modules/
+
+# Выходные .md, если тестишь конвертацию внутри репо
+*.docx.md
+*.pdf.md
+*.xlsx.md
+*.pptx.md
+*.csv.md
+/tmp-out/

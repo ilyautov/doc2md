@@ -1,0 +1,40 @@
+name: CI
+
+# Бесплатный детерминированный гейт: синтаксис обеих версий обёртки + smoke-тесты
+# арг-парсинга и graceful-поведения. Реальную конвертацию форматов CI НЕ гоняет:
+# это требовало бы скачивания бинарника anydoc из сети на каждый прогон и
+# зависело бы от внешнего пакета — недетерминированно. Живые проверки форматов
+# делаются вручную (см. skills/doc2md/SKILL.md, раздел «Протестировано»).
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Синтаксис convert.js (node --check)
+        run: node --check skills/doc2md/scripts/convert.js
+
+      - name: Синтаксис convert.sh (bash -n)
+        run: bash -n skills/doc2md/scripts/convert.sh
+
+      - name: Smoke-тесты обёртки (без сети/anydoc)
+        run: bash scripts/smoke.sh
+
+      - name: Валидность JSON-манифестов
+        run: |
+          for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json \
+                   .codex-plugin/plugin.json .cursor-plugin/plugin.json \
+                   gemini-extension.json; do
+            node -e "JSON.parse(require('fs').readFileSync('$f','utf8')); console.log('ok: $f')"
+          done
