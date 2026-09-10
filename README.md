@@ -6,7 +6,14 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Версия](https://img.shields.io/badge/версия-1.2.0-blueviolet)](CHANGELOG.md)
+[![Форматов](https://img.shields.io/badge/%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%BE%D0%B2-10-1F6F5C)](#зачем-это-нужно)
 [![Звёзды](https://img.shields.io/github/stars/ilyautov/doc2md?style=social)](https://github.com/ilyautov/doc2md/stargazers)
+
+**Быстрый старт**, одна команда для любого агента:
+
+```bash
+npx skills add ilyautov/doc2md
+```
 
 <p align="center">
   <img src="assets/social-preview.png" alt="doc2md: Word, Excel, PowerPoint, PDF, EPUB → чистый Markdown до чтения агентом. Один файл, список или папка" width="720">
