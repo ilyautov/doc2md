@@ -142,3 +142,15 @@ bash skills/doc2md/scripts/convert.sh договор.docx
 ## Лицензия
 
 MIT — см. [LICENSE](LICENSE). Движок anydoc — тоже MIT.
+
+---
+
+## Рядом стоят
+
+- [**humanizer-ru**](https://github.com/ilyautov/humanizer-ru): убирает следы нейросети из русского текста
+- [**marketplaces-mcp-ru**](https://github.com/ilyautov/marketplaces-mcp-ru): Wildberries, Ozon, Яндекс Маркет и Авито прямо из агента
+- [**small-business-ru**](https://github.com/ilyautov/small-business-ru): 34 скилла для малого бизнеса, считают налоги и проверяют контрагента по ИНН
+- [**consilium-principis**](https://github.com/ilyautov/consilium-principis): совет мыслителей, где каждая цитата сверяется дословно
+- [**hefest**](https://github.com/ilyautov/hefest): химическая безопасность завода, целиком офлайн
+
+Все проекты: [github.com/ilyautov](https://github.com/ilyautov). Пригодилось, поставьте звезду: по ней это находят другие.
