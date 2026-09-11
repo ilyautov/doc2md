@@ -161,3 +161,5 @@ MIT — см. [LICENSE](LICENSE). Движок anydoc — тоже MIT.
 - [**hefest**](https://github.com/ilyautov/hefest): химическая безопасность завода, целиком офлайн
 
 Все проекты: [github.com/ilyautov](https://github.com/ilyautov). Пригодилось, поставьте звезду: по ней это находят другие.
+
+Сделал [Илья Утов](https://github.com/ilyautov), лаборатория прикладного ИИ [AI Frontier](https://aifrontier.tech).
