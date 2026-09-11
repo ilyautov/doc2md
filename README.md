@@ -160,6 +160,6 @@ MIT — см. [LICENSE](LICENSE). Движок anydoc — тоже MIT.
 - [**consilium-principis**](https://github.com/ilyautov/consilium-principis): совет мыслителей, где каждая цитата сверяется дословно
 - [**hefest**](https://github.com/ilyautov/hefest): химическая безопасность завода, целиком офлайн
 
-Все проекты: [github.com/ilyautov](https://github.com/ilyautov). Пригодилось, поставьте звезду: по ней это находят другие.
+Все проекты одним списком, разобранные по назначению: [ilyautov.github.io](https://ilyautov.github.io/). Исходники: [github.com/ilyautov](https://github.com/ilyautov). Пригодилось, поставьте звезду: по ней это находят другие.
 
 Сделал [Илья Утов](https://github.com/ilyautov), лаборатория прикладного ИИ [AI Frontier](https://aifrontier.tech).
