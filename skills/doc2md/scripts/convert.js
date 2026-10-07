@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 
 const SUPPORTED_EXT = new Set([
@@ -72,6 +73,10 @@ function main() {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '-o' || a === '--output') {
+      if (!argv[i + 1] || argv[i + 1].startsWith('-')) {
+        console.error('doc2md: после -o нужна выходная папка');
+        process.exit(2);
+      }
       outDir = argv[++i];
     } else if (a === '-h' || a === '--help') {
       usage();
@@ -115,46 +120,73 @@ function main() {
   let skip = 0;
   let fail = 0;
   const isWin = process.platform === 'win32';
+  const outputNames = new Map();
+  for (const f of files) {
+    const name = `${path.basename(f)}.md`;
+    const sources = outputNames.get(name) || new Set();
+    sources.add(path.resolve(f));
+    outputNames.set(name, sources);
+  }
 
   for (const f of files) {
     // Полное имя файла + .md (не срезаем расширение): "отчёт.csv" и "отчёт.docx"
     // иначе оба лягут в "отчёт.md" и второй перезапишет первый.
     const base = path.basename(f);
-    const out = outDir ? path.join(outDir, `${base}.md`) : path.join(path.dirname(f), `${base}.md`);
+    let outputName = `${base}.md`;
+    if (outDir && outputNames.get(outputName).size > 1) {
+      const suffix = crypto.createHash('sha256').update(path.resolve(f)).digest('hex').slice(0, 12);
+      outputName = `${base}.${suffix}.md`;
+    }
+    const out = outDir ? path.join(outDir, outputName) : path.join(path.dirname(f), outputName);
 
-    // shell:true на Windows обязателен — npx там резолвится как npx.cmd,
-    // без shell Node его не находит через PATH.
-    const res = spawnSync('npx', ['-y', '@firecrawl/anydoc', f, '-o', out], {
+    // На Windows npx.cmd запускается через cmd.exe. Пользовательский путь
+    // никогда не попадает в командную строку: документ передаётся через stdin.
+    // Формат указан явно, потому что CSV без имени файла не определяется.
+    let input;
+    try {
+      input = fs.readFileSync(f);
+    } catch (error) {
+      console.error(`ОШИБКА  ${f} — не удалось прочитать файл: ${error.message}`);
+      fail++;
+      continue;
+    }
+    const format = path.extname(f).slice(1).toLowerCase();
+    if (!SUPPORTED_EXT.has(format)) {
+      console.error(`ОШИБКА  ${f} — неподдерживаемое расширение`);
+      fail++;
+      continue;
+    }
+    const res = spawnSync('npx', ['-y', '@firecrawl/anydoc', '-', '--format', format], {
       shell: isWin,
+      input,
       encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
     });
 
     const errOutput = (res.stderr || res.error?.message || '').trim();
 
-    // Категоризация исхода. Контракт кодов возврата anydoc формально не
-    // задокументирован, поэтому различаем консервативно:
-    //   • не удалось ДАЖE запустить npx (ENOENT / нет в PATH / 126/127) — это
-    //     ОШИБКА окружения, а НЕ «файл — скан». Иначе полный отказ npx выглядел
-    //     бы как «все ваши документы нечитаемы» и увёл бы на бессмысленный OCR.
-    //   • код 0 — OK.
-    //   • прочий ненулевой код (файл дошёл до anydoc, но не сконвертировался) —
-    //     ПРОПУСК: скорее всего скан/шифр/битый файл; печатаем stderr как есть.
-    if (res.error || res.status === 127 || res.status === 126) {
-      console.error(`ОШИБКА  ${f} — не удалось запустить anydoc: ${errOutput || 'npx недоступен'}`);
-      fail++;
-    } else if (res.status === 0) {
-      console.log(`OK      ${f} -> ${out}`);
-      ok++;
-    } else {
+    if (res.status === 3) {
       console.error(`ПРОПУСК ${f} — ${errOutput}`);
       skip++;
+    } else if (res.status !== 0 || res.error) {
+      console.error(`ОШИБКА  ${f} — ${errOutput || `anydoc завершился с кодом ${res.status}`}`);
+      fail++;
+    } else {
+      try {
+        fs.writeFileSync(out, res.stdout, { flag: 'w' });
+        console.log(`OK      ${f} -> ${out}`);
+        ok++;
+      } catch (error) {
+        console.error(`ОШИБКА  ${f} — не удалось записать результат: ${error.message}`);
+        fail++;
+      }
     }
   }
 
   console.log('');
-  console.log(`Готово: ${ok} конвертировано, ${skip} пропущено (не читается/зашифровано/скан), ${fail} ошибок вызова`);
+  console.log(`Готово: конвертировано ${ok}, нужен OCR ${skip}, ошибок ${fail}`);
   if (skip > 0) {
-    console.log('Пропущенные, скорее всего, сканы или PDF-картинки без текстового слоя — прогони их через OCR (скилл pdf, шаг «сделать PDF searchable») и повтори.');
+    console.log('Пропущенным PDF нужен OCR: сделайте текстовый слой и повторите конвертацию.');
   }
 
   process.exit(fail > 0 ? 1 : 0);
