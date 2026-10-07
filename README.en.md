@@ -77,7 +77,7 @@ Scans and image-only PDFs with no text layer aren't read (the engine has no OCR)
 
 Tested (2026-08-06, Cowork sandbox, Node 22, Linux/macOS): `.csv` and `.docx` with Cyrillic, name-collision folder, paths with spaces, missing paths, recursive folders — for both `convert.js` and `convert.sh`.
 
-**Not tested live:** `.pptx`, `.xlsx`, `.pdf`, `.epub`, a real client document batch, and a live Windows run. The Windows code path is reasoned about, not verified. Verified a format or OS? [Open an issue](https://github.com/ilyautov/doc2md/issues).
+**Automated Windows CI verified (2026-10-07):** CSV and a real DOCX whose names contain spaces and `%TEMP%` convert successfully; the test checks extracted DOCX text and output collisions. **Not verified on a user's Windows machine:** skill installation or a real client batch. `.pptx`, `.xlsx`, `.pdf`, and `.epub` also remain untested live. Verified a format or environment? [Open an issue](https://github.com/ilyautov/doc2md/issues).
 
 ## Source
 
