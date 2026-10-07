@@ -1,10 +1,7 @@
 name: CI
 
-# Бесплатный детерминированный гейт: синтаксис обеих версий обёртки + smoke-тесты
-# арг-парсинга и graceful-поведения. Реальную конвертацию форматов CI НЕ гоняет:
-# это требовало бы скачивания бинарника anydoc из сети на каждый прогон и
-# зависело бы от внешнего пакета — недетерминированно. Живые проверки форматов
-# делаются вручную (см. skills/doc2md/SKILL.md, раздел «Протестировано»).
+# Быстрый офлайн smoke-гейт и отдельная проверка Windows с закреплённой
+# версией anydoc. Полную матрицу форматов CI не гоняет; см. SKILL.md.
 
 on:
   pull_request:
@@ -38,3 +35,24 @@ jobs:
                    gemini-extension.json; do
             node -e "JSON.parse(require('fs').readFileSync('$f','utf8')); console.log('ok: $f')"
           done
+
+  windows-paths:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "20"
+      - name: Install anydoc for the Windows path test
+        run: npm install -g @firecrawl/anydoc@0.2.4
+      - name: Spaces, percent signs, and output collisions
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force 'test-input/a', 'test-input/b', 'test-output' | Out-Null
+          Set-Content -LiteralPath 'test-input/a/a %TEMP% b.csv' -Value "name,value`na,1" -NoNewline
+          Set-Content -LiteralPath 'test-input/a/dup.csv' -Value "name,value`na,2" -NoNewline
+          Set-Content -LiteralPath 'test-input/b/dup.csv' -Value "name,value`nb,3" -NoNewline
+          node skills/doc2md/scripts/convert.js test-input/a test-input/b -o test-output
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Test-Path -LiteralPath 'test-output/a %TEMP% b.csv.md')) { throw 'Special-character path was lost' }
+          if ((Get-ChildItem -LiteralPath test-output -Filter 'dup.csv.*.md').Count -ne 2) { throw 'Output collision lost a file' }
