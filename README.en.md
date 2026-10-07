@@ -63,25 +63,25 @@ Without `-o`, each `<name>.<ext>.md` is written next to the source — the exten
 | OpenDocument | `.odt` `.ods` `.odp` |
 | Other | `.rtf` `.epub` `.csv` `.pdf` |
 
-Scans and image-only PDFs with no text layer aren't read (the engine has no OCR) — they go to "SKIP" and the batch doesn't fail. Run OCR first for those.
+In local mode, scans and image-only PDFs without a text layer go to "SKIP" and the batch continues. Run OCR first to convert them. Upstream anydoc 0.2.4 also offers `--ocr hosted`, which sends the whole document to Firecrawl Parse; doc2md does not enable that mode.
 
 ## Outcome categories
 
 - **OK** — anydoc returned exit code `0`.
 - **ERROR** — couldn't even launch `npx`/anydoc (not on PATH, code 126/127): an environment failure, not "the file is unreadable" — OCR won't help.
-- **SKIP** — anydoc ran but the file didn't convert: almost always a scan / encrypted / corrupt file.
+- **SKIP** — anydoc returned exit code `3`: PDF pages need OCR. Encrypted or corrupt files are errors, not OCR candidates.
 
-> anydoc's exit-code contract isn't formally documented; the wrapper treats it conservatively (see `SKILL.md`).
+> These exit codes are listed by `anydoc --help` in version 0.2.4 (see `SKILL.md`).
 
 ## Tested / not tested
 
 Tested (2026-08-06, Cowork sandbox, Node 22, Linux/macOS): `.csv` and `.docx` with Cyrillic, name-collision folder, paths with spaces, missing paths, recursive folders — for both `convert.js` and `convert.sh`.
 
-**Not tested live:** `.pptx`, `.xlsx`, `.pdf`, `.epub`, a real client document batch, and a live Windows run. The Windows code path is reasoned about, not verified. Verified a format or OS? [Open an issue](https://github.com/ilyautov/doc2md/issues).
+**Automated Windows CI verified (2026-10-07):** CSV and a real DOCX whose names contain spaces and `%TEMP%` convert successfully; the test checks extracted DOCX text and output collisions. **Not verified on a user's Windows machine:** skill installation or a real client batch. `.pptx`, `.xlsx`, `.pdf`, and `.epub` also remain untested live. Verified a format or environment? [Open an issue](https://github.com/ilyautov/doc2md/issues).
 
 ## Source
 
-A wrapper over [firecrawl/anydoc](https://github.com/firecrawl/anydoc) (MIT, Rust). The upstream also ships a minimal single-file skill; doc2md adds batch processing, an honest OK/SKIP/ERROR summary, OCR routing, a cross-platform Node version and docs. Benchmark numbers are the vendor's own — see [SOURCES.md](SOURCES.md).
+A wrapper over [firecrawl/anydoc](https://github.com/firecrawl/anydoc) (MIT, Rust). The upstream also ships a minimal single-file skill; doc2md adds batch processing, an honest OK/SKIP/ERROR summary, explicit identification of PDFs needing OCR, a cross-platform Node version and docs. Benchmark numbers are the vendor's own — see [SOURCES.md](SOURCES.md).
 
 ## Author
 

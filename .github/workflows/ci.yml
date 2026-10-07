@@ -45,14 +45,21 @@ jobs:
           node-version: "20"
       - name: Install anydoc for the Windows path test
         run: npm install -g @firecrawl/anydoc@0.2.4
-      - name: Spaces, percent signs, and output collisions
+      - name: Windows CSV and DOCX paths, content, and output collisions
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force 'test-input/a', 'test-input/b', 'test-output' | Out-Null
+          New-Item -ItemType Directory -Force 'test-input/a', 'test-input/b', 'test-input/docx-source/_rels', 'test-input/docx-source/word', 'test-output' | Out-Null
           Set-Content -LiteralPath 'test-input/a/a %TEMP% b.csv' -Value "name,value`na,1" -NoNewline
           Set-Content -LiteralPath 'test-input/a/dup.csv' -Value "name,value`na,2" -NoNewline
           Set-Content -LiteralPath 'test-input/b/dup.csv' -Value "name,value`nb,3" -NoNewline
+          Set-Content -LiteralPath 'test-input/docx-source/[Content_Types].xml' -Value '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>' -NoNewline
+          Set-Content -LiteralPath 'test-input/docx-source/_rels/.rels' -Value '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>' -NoNewline
+          Set-Content -LiteralPath 'test-input/docx-source/word/document.xml' -Value '<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:p><w:r><w:t>DOC2MD_WINDOWS_DOCX_OK</w:t></w:r></w:p><w:sectPr/></w:body></w:document>' -NoNewline
+          [System.IO.Compression.ZipFile]::CreateFromDirectory((Resolve-Path 'test-input/docx-source').Path, [System.IO.Path]::GetFullPath('test-input/a/a %TEMP% b.docx'))
           node skills/doc2md/scripts/convert.js test-input/a test-input/b -o test-output
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           if (-not (Test-Path -LiteralPath 'test-output/a %TEMP% b.csv.md')) { throw 'Special-character path was lost' }
+          $docxOutput = 'test-output/a %TEMP% b.docx.md'
+          if (-not (Test-Path -LiteralPath $docxOutput)) { throw 'DOCX path was lost' }
+          if (-not (Select-String -LiteralPath $docxOutput -Pattern 'DOC2MD_WINDOWS_DOCX_OK' -Quiet)) { throw 'DOCX text was not converted' }
           if ((Get-ChildItem -LiteralPath test-output -Filter 'dup.csv.*.md').Count -ne 2) { throw 'Output collision lost a file' }

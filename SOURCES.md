@@ -6,7 +6,7 @@ doc2md — тонкая обёртка над **[firecrawl/anydoc](https://githu
 (MIT, написан на Rust). Вся собственно конвертация форматов в Markdown
 выполняется anydoc; doc2md добавляет поверх пакетную обработку (файл / список /
 папка), построчный статус и итоговую сводку `OK` / `ПРОПУСК` / `ОШИБКА`,
-маршрутизацию сканов на OCR и русскую документацию.
+явную пометку PDF, которым нужен OCR, и русскую документацию.
 
 - Репозиторий движка: https://github.com/firecrawl/anydoc
 - npm-пакет: [`@firecrawl/anydoc`](https://www.npmjs.com/package/@firecrawl/anydoc)
